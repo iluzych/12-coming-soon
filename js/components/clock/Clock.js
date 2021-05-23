@@ -1,8 +1,6 @@
 class Clock {
-    constructor(selector, targetDate) {
+    constructor(selector) {
         this.selector = selector;
-        this.targetDate = targetDate;
-
         this.DOM = null;
 
         this.init();
@@ -32,56 +30,8 @@ class Clock {
         return true;
     }
 
-    formatTime(timeValues) {
-        const updatedTime = [];
-
-        for (let i = 0; i < timeValues.length; i++) {
-            const time = timeValues[i];
-            if (i === 0 || time > 9) {
-                // kada pushinam originalu skaiciu
-                updatedTime.push(time);
-            } else {
-                // o kada pridedam nuli priekyje
-                updatedTime.push('0' + time);
-            }
-        }
-
-        return updatedTime;
-    }
-
-    calcDeadline() {
-        const dabartinisLaikas = new Date();
-        const einamiejiMetai = dabartinisLaikas.getFullYear();
-
-        let numanomaGimtadienioData = einamiejiMetai + '-' + this.targetDate;
-        let numanomasLaikas = new Date(numanomaGimtadienioData);
-
-        const dabartinesMilisekundes = dabartinisLaikas.getTime();
-        let numanomosMilisekundes = numanomasLaikas.getTime();
-
-        if (dabartinesMilisekundes > numanomosMilisekundes) {
-            numanomaGimtadienioData = (einamiejiMetai + 1) + '-' + this.targetDate;
-            numanomasLaikas = new Date(numanomaGimtadienioData);
-            numanomosMilisekundes = numanomasLaikas.getTime();
-        }
-
-        const likusiosMilisekundes = numanomosMilisekundes - dabartinesMilisekundes;
-        let likusiosSekundes = Math.floor(likusiosMilisekundes / 1000);
-
-        const dienos = Math.floor(likusiosSekundes / 60 / 60 / 24);
-        likusiosSekundes -= dienos * 60 * 60 * 24;
-
-        const valandos = Math.floor(likusiosSekundes / 60 / 60);
-        likusiosSekundes -= valandos * 60 * 60;
-
-        const minutes = Math.floor(likusiosSekundes / 60);
-        likusiosSekundes -= minutes * 60;
-
-        return [dienos, valandos, minutes, likusiosSekundes];
-    }
-
     render() {
-        const timeValues = this.formatTime(this.calcDeadline());
+        const timeValues = [432, 9, 37, 39];
         const labelValues = ['Days', 'Hours', 'Minutes', 'Seconds'];
         let HTML = '';
 
